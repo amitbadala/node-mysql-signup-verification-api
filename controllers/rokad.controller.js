@@ -1,132 +1,318 @@
 const express = require("express");
 const router = express.Router();
 const db = require("./../models");
+
 const DailyLogs = db.DailyLogs;
+const CreditInvoice = db.CreditInvoice;
+const PurchaseInfo = db.PurchaseInfo;
+const Customer = db.Customer;
+const Vendor = db.Vendor;
+const ExpenseCategory = db.ExpenseCategory;
+const ExpenseInfo = db.ExpenseInfo;
 
 // routes
 router.get("/daily-logs", getDailyLogs);
 router.post("/daily-logs", addDailyLog);
-router.put("/daily-logs", updateDailyLog);
+router.put("/daily-logs/:id", updateDailyLog);
 
 router.get("/credit-invoice", getCreditInvoices);
 router.post("/credit-invoice", addCreditInvoice);
-router.put("/credit-invoice", updateCreditInvoice);
+router.put("/credit-invoice/:id", updateCreditInvoice);
 
 router.get("/customer", addCustomer);
 router.post("/customer", addCustomer);
-router.put("/customer", updateCustomer);
+router.put("/customer/:id", updateCustomer);
 
 router.get("/expense-category", addExpenseCategories);
 router.post("/expense-info", addExpenseInfo);
-router.put("/expense-info", updateExpenseInfo);
+router.put("/expense-info/:id", updateExpenseInfo);
 
 router.get("/expense-category", addExpenseCategories);
 router.post("/expense-info", addExpenseInfo);
-router.put("/expense-info", updateExpenseInfo);
+router.put("/expense-info/:id", updateExpenseInfo);
 
 router.get("/purchase-info", getPurchases);
 router.post("/purchase-info", addPurchaseInfo);
-router.put("/purchase-info", updateExpenseInfo);
+router.put("/purchase-info/:id", updatePurchaseInfo);
 
 router.get("/vendor", getVendors);
 router.post("/vendor", addVendor);
-router.put("/vendor", updateVendor);
+router.put("/vendor/:id", updateVendor);
 
 module.exports = router;
 
 // Daily Logs
 
-function getDailyLogs(req, res, next) {
-  console.log(req.body);
-  res.json({ hello: 10 });
-}
-
-function addDailyLog(req, res) {
-  // Create a Tutorial
-  const dailyLogs = {
-    total_cash: 100000,
-    created_date: new Date(),
-  };
-
-  // Save Tutorial in the database
-  DailyLogs.create(dailyLogs)
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the Tutorial.",
-      });
+async function getDailyLogs(req, res) {
+  try {
+    const logs = await DailyLogs.findAll();
+    res.send(logs);
+  } catch (e) {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving daily logs.",
     });
+  }
 }
 
-function updateDailyLog(req, res, next) {
-  res.json({ hello: 10 });
+async function addDailyLog(req, res) {
+  const dailyLogs = req.body;
+  try {
+    const result = await DailyLogs.create(dailyLogs);
+    return res.send(result);
+  } catch (err) {
+    return res.status(500).send({
+      message: err.message || "Some error occurred while adding logs.",
+    });
+  }
+}
+
+async function updateDailyLog(req, res) {
+  const id = req.params.id;
+  try {
+    const num = await DailyLogs.update(req.body, {
+      where: { id: id },
+    });
+    if (num == 1) {
+      res.send({
+        message: "Records was updated successfully.",
+      });
+    } else {
+      res.send({
+        message: `Cannot update Records with id=${id}. Maybe Records was not found or req.body is empty!`,
+      });
+    }
+  } catch (err) {
+    res.status(500).send({
+      message: "Error updating Records with id=" + err,
+    });
+  }
 }
 
 // Credit Invoice
 
-function getCreditInvoices(req, res, next) {
-  res.json({ hello: 10 });
+async function getCreditInvoices(req, res) {
+  try {
+    const logs = await CreditInvoice.findAll();
+    res.send(logs);
+  } catch (e) {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving daily logs.",
+    });
+  }
 }
 
-function addCreditInvoice(req, res, next) {
-  res.json({ hello: 10 });
+async function addCreditInvoice(req, res) {
+  const creditInvoice = req.body;
+  try {
+    const result = await CreditInvoice.create(creditInvoice);
+    return res.send(result);
+  } catch (err) {
+    return res.status(500).send({
+      message: err.message || "Some error occurred while adding logs.",
+    });
+  }
 }
 
-function updateCreditInvoice(req, res, next) {
-  res.json({ hello: 10 });
+async function updateCreditInvoice(req, res) {
+  const id = req.params.id;
+  try {
+    const num = await CreditInvoice.update(req.body, {
+      where: { id: id },
+    });
+    if (num == 1) {
+      res.send({
+        message: "Records was updated successfully.",
+      });
+    } else {
+      res.send({
+        message: `Cannot update Records with id=${id}. Maybe Records was not found or req.body is empty!`,
+      });
+    }
+  } catch (err) {
+    res.status(500).send({
+      message: "Error updating Records with id=" + err,
+    });
+  }
 }
 
 // Customers
 
-function addCustomer(req, res, next) {
-  res.json({ hello: 10 });
+async function addCustomer(req, res) {
+  const customer = req.body;
+  try {
+    const result = await Customer.create(customer);
+    return res.send(result);
+  } catch (err) {
+    return res.status(500).send({
+      message: err.message || "Some error occurred while adding logs.",
+    });
+  }
 }
 
-function updateCustomer(req, res, next) {
-  res.json({ hello: 10 });
+async function updateCustomer(req, res) {
+  const id = req.params.id;
+  try {
+    const num = await Customer.update(req.body, {
+      where: { id: id },
+    });
+    if (num == 1) {
+      res.send({
+        message: "Records was updated successfully.",
+      });
+    } else {
+      res.send({
+        message: `Cannot update Records with id=${id}. Maybe Records was not found or req.body is empty!`,
+      });
+    }
+  } catch (err) {
+    res.status(500).send({
+      message: "Error updating Records with id=" + err,
+    });
+  }
 }
 
 // Expenses
 
-function addExpenseCategories(req, res, next) {
-  res.json({ hello: 10 });
+async function addExpenseCategories(req, res) {
+  const expenseCategory = req.body;
+  try {
+    const result = await ExpenseCategory.create(expenseCategory);
+    return res.send(result);
+  } catch (err) {
+    return res.status(500).send({
+      message: err.message || "Some error occurred while adding logs.",
+    });
+  }
 }
 
-function addExpenseInfo(req, res, next) {
-  res.json({ hello: 10 });
+async function addExpenseInfo(req, res) {
+  const expenseInfo = req.body;
+  try {
+    const result = await ExpenseInfo.create(expenseInfo);
+    return res.send(result);
+  } catch (err) {
+    return res.status(500).send({
+      message: err.message || "Some error occurred while adding logs.",
+    });
+  }
 }
 
-function updateExpenseInfo(req, res, next) {
-  res.json({ hello: 10 });
+async function updateExpenseInfo(req, res) {
+  const id = req.params.id;
+  try {
+    const num = await ExpenseInfo.update(req.body, {
+      where: { id: id },
+    });
+    if (num == 1) {
+      res.send({
+        message: "Records was updated successfully.",
+      });
+    } else {
+      res.send({
+        message: `Cannot update Records with id=${id}. Maybe Records was not found or req.body is empty!`,
+      });
+    }
+  } catch (err) {
+    res.status(500).send({
+      message: "Error updating Records with id=" + err,
+    });
+  }
 }
 
 // Purchase
 
-function getPurchases(req, res, next) {
-  res.json({ hello: 10 });
+async function getPurchases(req, res) {
+  try {
+    const logs = await PurchaseInfo.findAll();
+    res.send(logs);
+  } catch (e) {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving daily logs.",
+    });
+  }
 }
 
-function addPurchaseInfo(req, res, next) {
-  res.json({ hello: 10 });
+async function addPurchaseInfo(req, res) {
+  const purchaseInfo = req.body;
+  try {
+    const result = await PurchaseInfo.create(purchaseInfo);
+    return res.send(result);
+  } catch (err) {
+    return res.status(500).send({
+      message: err.message || "Some error occurred while adding logs.",
+    });
+  }
 }
 
-function updatePurchaseInfo(req, res, next) {
-  res.json({ hello: 10 });
+async function updatePurchaseInfo(req, res) {
+  const id = req.params.id;
+  try {
+    const num = await PurchaseInfo.update(req.body, {
+      where: { id: id },
+    });
+    if (num == 1) {
+      res.send({
+        message: "Records was updated successfully.",
+      });
+    } else {
+      res.send({
+        message: `Cannot update Records with id=${id}. Maybe Records was not found or req.body is empty!`,
+      });
+    }
+  } catch (err) {
+    res.status(500).send({
+      message: "Error updating Records with id=" + err,
+    });
+  }
 }
 
 // Vendor
 
-function getVendors(req, res, next) {
-  res.json({ hello: 10 });
+async function getVendors(req, res) {
+  try {
+    const logs = await Vendor.findAll();
+    res.send(logs);
+  } catch (e) {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving daily logs.",
+    });
+  }
 }
 
-function addVendor(req, res, next) {
-  res.json({ hello: 10 });
+async function addVendor(req, res) {
+  const vendor = req.body;
+  try {
+    const result = await Vendor.create(vendor);
+    return res.send(result);
+  } catch (err) {
+    return res.status(500).send({
+      message: err.message || "Some error occurred while adding logs.",
+    });
+  }
 }
 
-function updateVendor(req, res, next) {
-  res.json({ hello: 10 });
+async function updateVendor(req, res) {
+  const id = req.params.id;
+  try {
+    const num = await Vendor.update(req.body, {
+      where: { id: id },
+    });
+    if (num == 1) {
+      res.send({
+        message: "Records was updated successfully.",
+      });
+    } else {
+      res.send({
+        message: `Cannot update Records with id=${id}. Maybe Records was not found or req.body is empty!`,
+      });
+    }
+  } catch (err) {
+    res.status(500).send({
+      message: "Error updating Records with id=" + err,
+    });
+  }
 }

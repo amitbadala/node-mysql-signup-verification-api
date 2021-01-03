@@ -8,7 +8,7 @@ const db = require("./../models");
 initialize();
 
 async function initialize() {
-  db.sequelize.sync();
+  // db.sequelize.sync();
   // create db if it doesn't already exist
   //   const { host, port, user, password, database } = config.database;
   //   const connection = await mysql.createConnection({

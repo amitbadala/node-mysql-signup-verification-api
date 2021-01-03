@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const errorHandler = require("_middleware/error-handler");
+const db = require("./models");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -19,11 +20,11 @@ app.use(
 );
 
 // api routes
-app.use("/accounts", require("./accounts/accounts.controller"));
+// app.use("/accounts", require("./accounts/accounts.controller"));
 app.use("/rokad", require("./controllers/rokad.controller"));
-
+// db.sequelize.sync();
 // swagger docs route
-app.use("/api-docs", require("_helpers/swagger"));
+// app.use("/api-docs", require("_helpers/swagger"));
 
 // global error handler
 // app.use(errorHandler);
