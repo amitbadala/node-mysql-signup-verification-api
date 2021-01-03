@@ -1,19 +1,26 @@
 ﻿{
-    "database": {
-        "host": "localhost",
-        "port": 3306,
-        "user": "root",
-        "password": "",
-        "database": "node-mysql-signup-verification-api"
-    },
-    "secret": "THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING",
-    "emailFrom": "info@node-mysql-signup-verification-api.com",
-    "smtpOptions": {
-        "host": "[ENTER YOUR OWN SMTP OPTIONS OR CREATE FREE TEST ACCOUNT IN ONE CLICK AT https://ethereal.email/]",
-        "port": 587,
-        "auth": {
-            "user": "",
-            "pass": ""
-        }
+  "database": {
+    "host": "182.50.133.87",
+    "port": 3306,
+    "user": "rokad",
+    "password": "rokad@123",
+    "name": "webesky_rokad",
+    "dialect": "mysql",
+    "pool": {
+      "max": 5,
+      "min": 0,
+      "acquire": 30000,
+      "idle": 10000
     }
+  },
+  "secret": "THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING",
+  "emailFrom": "info@node-mysql-signup-verification-api.com",
+  "smtpOptions": {
+    "host": "[ENTER YOUR OWN SMTP OPTIONS OR CREATE FREE TEST ACCOUNT IN ONE CLICK AT https://ethereal.email/]",
+    "port": 587,
+    "auth": {
+      "user": "",
+      "pass": ""
+    }
+  }
 }
